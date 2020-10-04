@@ -39,6 +39,7 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 static int cmd_si(char *args);
 static int cmd_info(char *args);
+static int cmd_x(char *args);
 static struct {
 	char *name;
 	char *description;
@@ -49,6 +50,7 @@ static struct {
 	{ "q", "Exit NEMU", cmd_q },
 	{ "si", "single step", cmd_si },
 	{"info", "output information", cmd_info},
+	{"x", "scan memory address", cmd_x},
 
 	/* TODO: Add more commands */
 
@@ -111,6 +113,25 @@ static int cmd_info(char *args){
 			 printf("%s %x %d\n",regsl[i],cpu.gpr[i]._32,cpu.gpr[i]._32);
 		}
 	}
+	return 0;
+}
+
+static int cmd_x(char *args) {
+	/* extract the first argument */
+	char *arg1 = strtok(NULL, " ");
+	char *arg2 = strtok(NULL, " ");
+	int len;
+    swaddr_t address;
+	sscanf(arg1,"%d",&len);
+	sscanf(arg2,"%x",&address);
+	printf("0x%x:", address);
+	int j;
+	for(j=0;j<len;j++)
+	{
+	    printf("%x ",swaddr_read(address,4));
+		address+=4;
+	}
+	printf("\n");
 	return 0;
 }
 void ui_mainloop() {
