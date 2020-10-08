@@ -221,19 +221,17 @@ uint32_t eval(int l,int r) {
 	else if (check_parentheses (l,r) == true)return eval (l + 1,r - 1);
  	else {
 		int op = dominant_operator (l,r);
-//		printf ("op = %d\n",op);
- 		/*if (l == op || tokens[op].type == POINTOR || tokens[op].type == MINUS || tokens[op].type == '!')
+ 		if (l == op || tokens[op].type == POINTOR || tokens[op].type == MINUS || tokens[op].type == '!')
 		{
 			uint32_t val = eval (l + 1,r);
-//			printf ("val = %d\n",val);
 			switch (tokens[l].type)
  			{
-				case POINTOR:current_sreg = R_DS;return swaddr_read (val,4);
+				case POINTOR:return swaddr_read (val,4);
 				case MINUS:return -val;
 				case '!':return !val;
 				default :Assert (1,"default\n");
 			} 
-		}*/
+		}
 
 		uint32_t val1 = eval (l,op - 1);
 		uint32_t val2 = eval (op + 1,r);
