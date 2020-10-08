@@ -40,6 +40,7 @@ static int cmd_help(char *args);
 static int cmd_si(char *args);
 static int cmd_info(char *args);
 static int cmd_x(char *args);
+static int cmd_p(char *args);
 static struct {
 	char *name;
 	char *description;
@@ -51,6 +52,7 @@ static struct {
 	{ "si", "single step", cmd_si },
 	{"info", "output information", cmd_info},
 	{"x", "scan memory address", cmd_x},
+	{"p", "calculate", cmd_p},
 
 	/* TODO: Add more commands */
 
@@ -132,6 +134,15 @@ static int cmd_x(char *args) {
 		address+=4;
 	}
 	printf("\n");
+	return 0;
+}
+static int cmd_p(char *args) {
+	uint32_t num ;
+	bool suc;
+	num = expr (args,&suc);
+	if (suc)
+		printf ("0x%x:\t%d\n",num,num);
+	else assert (0);
 	return 0;
 }
 void ui_mainloop() {
