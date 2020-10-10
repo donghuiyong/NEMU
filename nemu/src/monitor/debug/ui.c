@@ -35,7 +35,12 @@ static int cmd_c(char *args) {
 static int cmd_q(char *args) {
 	return -1;
 }
-
+static int cmd_d(char *args) {
+	int num;
+	sscanf (args,"%d",&num);
+	delete_wp (num);
+	return 0;
+}
 static int cmd_help(char *args);
 static int cmd_si(char *args);
 static int cmd_info(char *args);
@@ -53,7 +58,7 @@ static struct {
 	{"info", "output information", cmd_info},
 	{"x", "scan memory address", cmd_x},
 	{"p", "calculate", cmd_p},
-
+    {"d", "delete watchpoint", cmd_d},
 	/* TODO: Add more commands */
 
 };
@@ -115,6 +120,10 @@ static int cmd_info(char *args){
 			 printf("%s %x %d\n",regsl[i],cpu.gpr[i]._32,cpu.gpr[i]._32);
 		}
 	}
+	else if(strcmp(arg,"w")==0){
+		info_wp();	
+	}
+	else assert(0);
 	return 0;
 }
 
