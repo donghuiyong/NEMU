@@ -1,6 +1,6 @@
 ##### global settings #####
 
-.PHONY: nemu entry testcase kernel run gdb test submit clean
+.PHONY: nemu entry testcase kernel run gdb test submit clean count
 
 CC := gcc
 LD := ld
@@ -50,7 +50,8 @@ clean: clean-cpp
 	-rm -rf obj 2> /dev/null
 	-rm -f *log.txt entry $(FLOAT) 2> /dev/null
 
-
+count:
+	find . -name "*.[ch]" | xargs cat | grep -v ^$ | wc -l
 ##### some convinient rules #####
 
 USERPROG := obj/testcase/mov
